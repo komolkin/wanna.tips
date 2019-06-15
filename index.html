@@ -10,12 +10,37 @@
         background: #9E00FF;
         color: white;
     }
+    .wrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-size: 100%;
+        display: table;
+        vertical-align: middle;
+        margin: 0;
+        padding: 0;
+        table-layout: fixed;
+    }
+    .container {
+        display: table-cell;
+        vertical-align: middle;
+    }
     </style>
 </head>
 <body>
-    <img src="logo.svg" alt="" class="logo">
-    <h1>Простой способ получать чаевые</h1>
-    <span>Отсутствие наличных больше не проблема.</span>
-    <a href="#">Попробовать</a>
+    <div class="wrapper">
+        <div class="container">
+            <div class="about">
+                <img src="logo.svg" alt="" class="logo">
+                <h1>Простой способ получать чаевые</h1>
+                <span>Отсутствие наличных больше не проблема.</span>
+                <a href="#">Попробовать</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
