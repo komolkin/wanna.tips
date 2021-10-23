@@ -98,7 +98,7 @@ const [answers, setAnswers] = useState([])
             <img src="https://ipfs.io/ipfs/QmbctVN8tPaDLiLysVDwThf7JTJhMejbSypZ4a3v5H2G3a" alt="Avatar of riklomas.eth" />
             <div className="name">
               <span className="primary">riklomas.eth</span>
-              <span className="secondary">0xb25bf3...aaf4</span>
+              <span className="secondary">0xb25b...aaf4</span>
             </div>
           </div>
           {/* end EthName */}
