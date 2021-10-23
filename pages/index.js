@@ -22,16 +22,60 @@ export default function Home() {
   // 4. make the user name look good
   // 5. let the user post their own reply
 
+const [accounts, setAccounts] = useState([])
+const [isLoggedIn, setIsLoggedIn] = useState(false)
+const [isLoading, setIsLoading] = useState()
+const [answers, setAnswers] = useState([])
+
+  const connect = async function () {
+    let a = await window.ethereum.request({ method: "eth_requestAccounts" })
+    setAccounts(a)
+  }
+
+  useEffect(function () {
+    if (accounts.length > 0) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+    }
+  }, [accounts] )
+
+  useEffect(async function () {
+    let a = await window.ethereum.request({ method: "eth_accounts" })
+    setAccounts(a)
+
+    window.ethereum.on("accountsChanged", function (a) {
+      setAccounts(a)
+    })
+
+    fetch("/api/answers")
+      .then(response => response.json())
+      .then(data => {
+        setAnswers(data.answers)
+        setIsLoading(false)
+      })
+  }, [])
+
+  let answersArea = (
+    <div className="loading">Loading ideas...</div>
+  )
+
+  if (!isLoading) {
+    answersArea = answers.map(function (answer, index) {
+      return <Answer number={index + 1} answer={answer} accounts={accounts} isLoggedIn={isLoggedIn} />
+    })
+  }
+
   return (
     <main>
       <header>
-        <h1>Potstop</h1>
+        <h1>Wanna.tips</h1>
 
         <form>
           <input type="text" placeholder="Search" />
         </form>
 
-        <button>Connect</button>
+        <Account accounts={accounts} isLoggedIn={isLoggedIn} connect={connect} />
       </header>
 
       <section className="question">
@@ -63,7 +107,9 @@ export default function Home() {
       </section>
 
       <section className="answers">
-        <div className="loading">Loading answers...</div>
+        {answersArea}
+
+        <AnswerForm accounts={accounts} setAnswers={setAnswers} isLoggedIn={isLoggedIn} />
       </section>
 
       <Head>
